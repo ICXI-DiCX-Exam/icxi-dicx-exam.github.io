@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CX Professional Diploma Examination</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE: formal, calm, exam-hall clarity
+   IDEA: an official examination paper with a cover sheet and an answer grid
+   PICTURE: the question card and the 12-pillar answer grid are the picture
+   COLOUR and TYPE: ICXI/MEGA deep navy, MEGA blue accent, white paper; Figtree
+   LAYOUT: navy masthead with both logos, paper column, sticky clock bar */
+:root{--navy:#071B33;--navy2:#0D2A4E;--blue:#0283DC;--blue-d:#0167B0;--ink:#13233A;--mut:#5A6B82;
+--line:#DCE3EC;--paper:#FFFFFF;--bg:#EEF2F7;--amber:#C77700;--amber-bg:#FFF4E0;--red:#C62828;--red-bg:#FDECEA;--green:#1E8E4E;--green-bg:#E5F5EC}
+*{box-sizing:border-box;min-width:0}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 Figtree,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;overflow-x:clip}
+button,input{font:inherit}
+.hidden{display:none!important}
+/* masthead */
+.mast{background:linear-gradient(180deg,var(--navy) 0%,var(--navy2) 100%);color:#fff;padding:22px max(5vw,16px) 26px}
+.mast-in{max-width:980px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.logos{display:flex;align-items:center;gap:22px}
+.logos img{display:block;height:60px;width:auto}
+.logos .sep{width:1px;height:44px;background:rgba(255,255,255,.28)}
+.mast-tag{font-size:14px;color:#B9C8DB;text-align:right}
+.mast-tag b{display:block;color:#fff;font-size:15px;font-weight:600}
+.wrap{max-width:980px;margin:0 auto;padding:0 max(5vw,16px)}
+.paper{background:var(--paper);border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 30px -18px rgba(7,27,51,.35)}
+/* cover */
+.cover{margin-top:-14px;padding:clamp(24px,4vw,44px)}
+.kicker{color:var(--blue-d);font-weight:700;font-size:15px;margin:0 0 6px}
+h1{font-size:clamp(30px,4.4vw,44px);line-height:1.08;margin:0 0 10px;font-weight:800;color:var(--navy);text-wrap:balance}
+.lead{color:var(--mut);margin:0 0 26px;max-width:62ch}
+.facts{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:28px}
+.facts div{padding:14px 16px;border-right:1px solid var(--line)}
+.facts div:last-child{border-right:0}
+.facts b{display:block;font-size:22px;color:var(--navy);line-height:1.15}
+.facts span{font-size:13px;color:var(--mut)}
+.cols{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:32px}
+h2{font-size:19px;margin:0 0 12px;color:var(--navy)}
+.rules{margin:0;padding-left:20px;color:#2C3D55}
+.rules li{margin-bottom:8px}
+label.f{display:block;font-weight:600;font-size:15px;margin:0 0 6px}
+label.f small{font-weight:400;color:var(--mut)}
+input[type=text],input[type=email]{width:100%;height:48px;border:1.5px solid #C6D1DE;border-radius:10px;padding:0 14px;font-size:16px;color:var(--ink);background:#fff;margin-bottom:16px}
+input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(2,131,220,.18)}
+.check{display:flex;gap:12px;align-items:flex-start;font-size:14.5px;color:#2C3D55;margin:4px 0 20px;cursor:pointer}
+.check input{width:20px;height:20px;margin-top:2px;accent-color:var(--blue);flex:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:10px;border:1.5px solid transparent;font-weight:700;font-size:16px;cursor:pointer;transition:background .15s,border-color .15s}
+.btn:focus-visible{outline:3px solid rgba(2,131,220,.45);outline-offset:2px}
+.btn-p{background:var(--blue);color:#fff}.btn-p:hover{background:var(--blue-d)}
+.btn-p[disabled]{background:#9DB5CC;cursor:not-allowed}
+.btn-s{background:#fff;color:var(--navy);border-color:#C6D1DE}.btn-s:hover{border-color:var(--navy)}
+.btn-f{background:#fff;color:var(--amber);border-color:#F0C98A}.btn-f.on{background:var(--amber-bg);border-color:var(--amber)}
+.btn-n{background:var(--navy);color:#fff}.btn-n:hover{background:#02101F}
+.full{width:100%}
+.err{color:var(--red);font-size:14px;min-height:20px;margin-top:10px}
+.foot{color:var(--mut);font-size:13px;text-align:center;padding:26px 16px 34px}
+/* exam bar */
+.bar{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff;box-shadow:0 4px 14px -8px rgba(0,0,0,.5)}
+.bar-in{max-width:1180px;margin:0 auto;padding:10px max(3vw,14px);display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.bar img{height:30px;width:auto}
+.bar .who{flex:1;font-size:14px;color:#B9C8DB;line-height:1.3;min-width:140px}
+.bar .who b{color:#fff;display:block;font-size:15px}
+.prog{font-size:14px;color:#B9C8DB;white-space:nowrap}
+.prog b{color:#fff}
+.clock{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.22);border-radius:10px;padding:6px 14px;font-variant-numeric:tabular-nums}
+.clock .t{font-size:26px;font-weight:800;letter-spacing:.5px;white-space:nowrap}
+.clock .l{font-size:12px;color:#B9C8DB;line-height:1.2}
+.clock.warn{background:var(--amber);border-color:var(--amber)}.clock.warn .l{color:#fff}
+.clock.crit{background:var(--red);border-color:var(--red)}.clock.crit .l{color:#fff}
+.pbar{height:4px;background:rgba(255,255,255,.12)}.pbar i{display:block;height:100%;background:var(--blue);width:0;transition:width .3s}
+.exam{max-width:1180px;margin:0 auto;padding:22px max(3vw,14px) 40px;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:22px;align-items:start}
+.qcard{padding:clamp(20px,3vw,36px)}
+.qhead{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline;margin-bottom:14px}
+.qnum{font-weight:800;color:var(--navy);font-size:15px}
+.qpil{font-size:13.5px;color:var(--blue-d);font-weight:600;background:#E8F3FC;border-radius:999px;padding:4px 12px}
+.qtext{font-size:clamp(18px,2vw,20px);line-height:1.5;font-weight:600;color:var(--navy);margin:0 0 22px}
+.opts{display:grid;gap:12px}
+.opt{display:flex;gap:14px;align-items:flex-start;border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;cursor:pointer;background:#fff;transition:border-color .12s,background .12s}
+.opt:hover{border-color:#9FC6E6}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt .L{flex:none;width:32px;height:32px;border-radius:50%;border:1.5px solid #B7C4D3;display:grid;place-items:center;font-weight:700;color:var(--mut);font-size:15px}
+.opt .T{padding-top:4px;color:#22324A}
+.opt.sel{border-color:var(--blue);background:#F0F8FF}
+.opt.sel .L{background:var(--blue);border-color:var(--blue);color:#fff}
+.opt:focus-within{box-shadow:0 0 0 3px rgba(2,131,220,.25)}
+.qnav{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px;padding-top:20px;border-top:1px solid var(--line)}
+.qnav .sp{flex:1}
+.side{padding:18px;position:sticky;top:92px}
+.side h3{margin:0 0 4px;font-size:15px;color:var(--navy)}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12.5px;color:var(--mut);margin-bottom:12px}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.grid{display:grid;gap:6px}
+.prow{display:grid;grid-template-columns:30px repeat(4,minmax(0,1fr));gap:6px;align-items:center}
+.prow span{font-size:12px;color:var(--mut);font-weight:600}
+.cell{position:relative;height:36px;border-radius:8px;border:1.5px solid var(--line);background:#fff;font-weight:700;font-size:13.5px;color:var(--mut);cursor:pointer;padding:0}
+.cell.a{background:var(--navy);border-color:var(--navy);color:#fff}
+.cell.cur{outline:2.5px solid var(--blue);outline-offset:1px}
+.cell.f::after{content:"";position:absolute;top:-4px;right:-4px;width:10px;height:10px;border-radius:50%;background:var(--amber);border:2px solid #fff}
+.sidefoot{margin-top:16px}
+.sidefoot p{font-size:13px;color:var(--mut);margin:10px 0 0}
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(7,27,51,.55);display:grid;place-items:center;padding:16px;z-index:50}
+.mbox{max-width:480px;width:100%;padding:28px}
+.mbox h2{font-size:22px}
+.mbox p{color:#2C3D55;margin:0 0 10px}
+.mrow{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;flex-wrap:wrap}
+/* result */
+.result{margin-top:-14px;padding:clamp(24px,4vw,48px);text-align:center}
+.ring{width:210px;height:210px;margin:10px auto 18px;position:relative}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .c{position:absolute;inset:0;display:grid;place-content:center}
+.ring .c b{font-size:40px;line-height:1;color:var(--navy);font-weight:800}
+.ring .c span{color:var(--mut);font-size:15px}
+.badge{display:inline-block;font-weight:800;font-size:20px;padding:8px 22px;border-radius:999px;margin:4px 0 14px}
+.b-ok{background:var(--green-bg);color:var(--green)}.b-no{background:var(--red-bg);color:var(--red)}
+.rmeta{color:var(--mut);max-width:56ch;margin:0 auto 6px}
+.bands{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;max-width:620px;margin:24px auto 0;text-align:left}
+.bands div{border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13px;color:var(--mut)}
+.bands div b{display:block;color:var(--navy);font-size:14.5px}
+.bands div.me{border-color:var(--blue);background:#F0F8FF}
+.loading{padding:60px 20px;text-align:center;color:var(--mut)}
+@media (max-width:900px){.exam{grid-template-columns:minmax(0,1fr)}.side{position:static}}
+@media (max-width:760px){.facts{grid-template-columns:repeat(2,minmax(0,1fr))}.facts div{border-bottom:1px solid var(--line)}.facts div:nth-child(2n){border-right:0}.facts div:last-child{grid-column:1/-1;border-bottom:0}.cols{grid-template-columns:minmax(0,1fr)}.bands{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.mast-tag{text-align:left}.logos img{height:42px}.bar img{display:none}.clock .t{font-size:22px}.qnav .btn{flex:1 1 40%}.qnav .sp{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="mast" id="mast">
+  <div class="mast-in">
+    <div class="logos">
+      <img src="data:image/png;base64,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" alt="ICXI – Excellence in Experience">
+      <span class="sep"></span>
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKgAAAA8CAYAAADyvPHhAAASe0lEQVR4Xu2deXQc1ZXGv+9VdUuyLeOFfTU4DJtZDWGLExPADEsIGDjhMAkkcAKEJYSckAMkZGEOMJNJJnOYOWBDICzDkoFhX8NmIEAYA0MAs0zCvi824E1Wd9X75txqSUjqKqlb3bLaon/n9D9S9dvq9qv37vvuLWhwFnr5HTBCKPJfk/TpIM28VIUl49KaqIJfW17LBu/msHJhPYdv4SKN11KtUYy0XSwdKa9feOkKL90h6TEvveSlN+0jyWf3zC+R4rPq0TZepO/Wo5z+hBUUOonC8QCOreDauuLlx3vxOw4aB7CuZa9qxJE2d/RT4NzuXtgBxI4hsGbSD5aNjggUAKyA8B4ID2hFWZ/FBYiia2sei5PvmgnhCM5VQcfx8prL60UlBgqQ31CxeD5zuefqWflgeHDPgNgJoBvs2tGIl1+D0AzAbQ9pD9BtAWCSK/+tLgLwloC3uwxykYBPBXzsoA/hEcPp07IxirmQ+fxfax07N22fXQWMgTA7vED3RCfwnVrL7KYyAwXGKwzOBXBgvSoeDPlodUEHQFxnGCfPAqDrBdw5WHtq5K1qvy+v/QQcCfBLANYD+1qllMySj4m4i8JzoH+HwEedcgtbHT+ptr4hc9ZzMwVMJxAKWNMzsZE5Qy6vH5UaKAju4+W/4ugerFflAxNsS2FfEMFw1SchJvikc/zP4aqjWhQX2oXcaaCOorhe//7LHtvQ9SAuEPCWo3uz2jrqiVt/q20FbGBlksiLmBnO1aPRcXymHvX0N1CVVjSp5An+GMCwG6itPSEcAmKdrpa8CeFNELvVo9ONypKCJoK6lMRBaQtLCK+DOs3RXdcIfQgv1vQ4xiyyjx1t7IEZAOpioH3WdoJ+D2F+VuclbGePnuEeHEJTARye1CNEgn4iYkRniuGmU9EW43KYB/KglLoKkO6U8PVGMU7DCzNJrN27vV2P+l3DObL1cs30MVCKHZ74DUo7wDJIrAni0BWxJtRc84C4U0BMTC4h5i8r8rbhrW9kWRFroxzcvwHYOrUlwhUijnMB/zKyLf2M8EJtKmHvjPZsGhNfrEdby3bHyxHfB+CejMJDQDPzTjvXo/I0Ymm6gENL/1OHF37XnufHw1XfSGN+2haHUynunra8SjZwvvP0kV5r9id65ZH1AIxNnciAEMT+4UWya2qizEDHwhXkcbaEjvRfMzcEeIBWxKUZrs444Gx2d1x4TMDDda6iofA5zgJwBJh6s58EdBrD1oUN1WgA4fa7PyXg0cx2CVNiD+tbTaT6F13A/yFwQ2rJREDoMN/iNqmp5hS8114CZiZzJ7Bc4C2hY81+ukbFy2/ghG8LWCOljZ964HxHt6AR2x8dwcUQ7hSwLGMWDeDwD7W2PdMB7mNcKiHDn8a1HPCtWisvgziRQJu5EgA8TcR/rHsdDQSlXUHskeo2kR5ziv7UQM0tIwzwNIX7zCebaqTCRDdXJ9bSh0wDjQMsIHRrVuXmRFYx+rtaKu+NFB8AYMeuddhyAnfShS/Uq/xGRHSnpLdLHSIepMu90ojt7ib6Lj/xHg+D+CCrnSIODudow6H2I9NA847vi7iV1LsZU/hEhcFPhlpxbzrUMUngQUTJZUHgVSi6uh5lNyqK/GYEpqe3j6/B85FGbXtvQo8nBDwrIE5trzDeA4cMtS8DnnGzM34IdpyWPYUf6mPV7E5oRX46wT1t7W0d8cDtjT571IxLblpLRjnvKMbLNdexEohO4mJEnXZUXC5GKU02gdzQ/aIDG2hr7n1AN5L4KLWvxBgSp9cyDou1eCxk581djwHhXaf4slrKXDXg/mnttMlA0LtBvn6Ci2HnxNZ5A54cCev7oLT5rZYBDTT5BTC4CsCLmQUTu8fSV6utuJsW376eyMNNsZSstIlLRvvaszSw6ce2ZCKLWyVmz97otSevFzM2S0CLYuwa/k6bV2snFYlFBP07xd0yhBuTXKK6wf3VVm7kgMMIJJstAi8Vi/j9UMqpB4WCNmEuThU+V4dfkWP+/7K+I8VbZpYnxgTKpXGNznk7ztMczSOxR2pTic18MZlFsye7FCoyUDv/lfR9ACb96o+VsVsUa1YYsCq3UFzQunDoVmJ3euGafJ4jtnPN5fBrwH25dltwCxTFJzEMnk0rS+BqWYocEUWYhnNV5PXHb9OUnacxxa+bnNET+4YX6f7oWGb+ePsz6CO+G0E/BdCZOm7Cxo7Yr9ozepfTKQQ26ipzgfPxSJ+5TwQ4uS6fAGMyZ1AwU8tA03l6po9zo3PeLjaDZt5DEuv7Kk+XKppBDdOBSroDwMFl40SEFA5scf4aAI9XMo4WwgDguNK16vDgHY6+4l/WcBAhPiUcwHgqxmO5XPYsQSjMVDVSTkRrxXVVgel5CX5fSj25GhQSi6H4tIH2CP7VJ5/jxtNfp3omnj4IOCT8ra6NTmX6xrsfFRtoYkbQ+QT+HmBbipFOkdzsSg2UgU4GuFqpnOQ4804G+SWDjtIwkmNYFw3jYAhclh1hZeEtah+sjKFAcLaAg8mhxSh4YI4r8L0B6z5vx3m8SNMEfCsRjfSDxHjfmkxM51TSh6oMFMACgDcD+EaK8oYkjlbcOYdBy6sDVa6idgC0b9c1Fth1r4uWrhTjaAQc/MfIXl0FFMfXu52R16ZQ4has9ACgVcJWJLomI71B8Xa2BoMqy1yMebGDqbPSTxodZuOcvz2Cn3zB3FMDUpWBOroPFesGOJhTPU3gsDqYOxWAbagy8SEOd2CilhfwgWd8U5hvXzpYY0cNHYW30ZbxFBfyvSIJ6kaX6Kbi0OA41qF0+A8gMdCCgHs6WHyskgZF3+Nz7kLNFzHFwkBSvzN5qh1tD2qgFW+SenD+UQkPZZ0ugTzKy2+V1REp2s5BtlPuukOaHzIc1ZK6ssfcmLYPLOoydYxowWfqDnUZESxg0TnMprB61yTyHsXLxjJfsezPCbZfyVxnktgac6NBnfdVGygZvE3iVmSdLgHjCZyZObJyMwRO6/5/LJqS/HMHgf/N6LQtTzeQj+oSMjEURGeP5xmf+b11Dx2rUlZFJ/BFCg8MUP9Eh+Cr4dUacDlTtYEacae5EvS8UkVWBmfFUlmAmznCRczuESQDN+Sq7PhoQdDdWX0huJHo0sM/hhnFhXUpflMW6twF5S0MqGpcjCtN15v2xeSMHtg++nDZgFlrhmSgYSsXUrqETPeLCphEyLKR9CEMsQvB0rQuxBEKP6y616OEGN4egRk/ca0OcLMR6SpzFs6zZ3eyEgEXD/XoOTqJH9LDjspTIbCuaxu7S3hZttdiSAaazJEuuBJAaqYRJltU7mx+t+6WJU58mmupG12aY8vrI3ITGgBzaQl6PuPW5QjsN9BafjiwcG8RR/YELAofF1H4eS11uQL+kGQ8yUDCl6OXF2TIDgfwdVRC5HF2ZgQosCHBvbrLaQG+RnCX0uSJ9xBzxM7cGwWKlwKI0tojYBumLJOGmQMJ9Ah/RF3UwpZUPXClRKckAY9XSRmRwsBaWHNK5mZpyDOokQt4C5TpKmgFtHdR0TadWjpRRE8WNQo3FsJlVYkGRiVetwNIDSWm5TqiO8HWhCuj73aPIP7MNrml+vQyoT/Uo+6giEfA9KetwfzYGTj5tlQjrclAk25QtoBOFasC3C6A2zPvxxxLYtPSF2CP9dtaOG5Qh+9oh6F7CcLVUPpGwmZRudx5K2Mc8n7MUT33qHRjr/sEhboELEYn8S143CGkx7gRmIBp+6dGgNZsoJ0dfApIfF5ptBD8ORx/2f1PUQ+JqsplMZoRZWt5m0nLsLU8oW96r4zYpfpgfk849g5ue0nUXRPZVrfDkyAPc/JnxphRmIXT5pXNojUbaNsYO/T3Fj+UpWG08/bu0Ia3PXijo1tcn6Fd9UlO54RzoCTGPGVXT8u2eG6X3HF4YPAdoScPloURX7cUS5+oZ2XRMbQ8pQ9KSNVbJPqAqV+x06U+1GygCUXNB3SvknCiTCyY4YmOT3HvANd8LklS2sQwD8d9pex1/WCSe/MML3+qZSKp5yBJ8VQo2RwlWUIEvBLHuH08x6fGu9dCULDcU3gtqwwC2+E3H/WZRetioMyHb3jwOgID7fgK3nNu+wSOqGKpUWGOT6EYH0PJzr/L3TLE2gRPR8h/lFeacLxqPlbHOIGHwY4dS0SWaicM+eeqC6sA84tCuDXzUqLdjZk8K7xQk7uvqYuBJpOox90C5med0XvhviDkcCeKbUiSwMAKsB96gcvPFWSCGxNS9E/itiYg81Ne6L0u9PIzF6o4ZGneBLQeTdAEJF2yR73jYpnra9gIWvFHKT3mKlHdO+wUMcmPkFCVmmkgWgN+Iu8vB5Pw4bJBc9IZAxYwAtCEwcJP5ZNwlmFDkAm5K+p/l3fjOvnoAY9gHxI/647ZSiBNHTQNxOYED52o8G0vPew9bg2cf4sMMpz/li7R8q7yi6CFivMIAJZQoScGS8A/O/MsDCPRt7kEc3QBkWRRLId2Ro8Z7rd60kTNdTPQZOycu0mS+fX6P4KuZeAaUe9pS3NLgjYsidC64RBU+nShKYHsmPAqL38MwGMIbJPEGQpBV9LY1clEcbRt4HCSnbtIsln3ZQjdyiM7HZqQ+FVhcsjkTvU1DCVJF+5wzl0wjLb5GcfTAuz+QmLb/vVRlhEIX0JrEjpSXwNN8DK3krmdunfun0bwn0vFUr1wdJcAuMSkioLbA+QWtFkUaBfQnuSzkmXARk6l1IebkuinhlJRYictA0gpMG8FwIKU7Nofi4Ff1Ku9laCFL1+B1ad+lsmwFyTavXBA+GstsMT3tigvzYDCQ87V5gJi4O6X/K8EJrMSgb+GPs587FSMcLeI1GhHev2ZGYJn5bAcSpL6pwtnVwJUffy+ZPi0JVWzJtu6dhzGTaHXBoJbU85OgDSWYhuEFvGzRzeTZMhJvqtOQAWJy0h9JCsm4jsOS1/KrWTBeLja1KdihznwWD/1FhDLsdrwvZ+gSZMmTZo0adKkSZMmTZo0adKkSZMmTZo0WWks+UTtdg5vH1MwpVWswpJx9iks1qDCFiuju7yhdMLq6f+97vr7ty87h1WTVR4vvwvEwwhZmqL2JIs17QVtutTRJblcTQ8quB9QmABiKYTQE+85+IfIoM8bBy3KVOKhpNanulJIEovsPaJQdF/v5G+xdLbzeI8B+5zvK453h3Nn+QjfC3JMcnh1ibFneuB9k9fZu5cI/zzi4s11FYs0aRzkdbCEH4l4RjFvZ6BPIEtorS9Q/CyZgudYOuziifud9w+AWMPJ7Qrw3KLizhwDe5EGFMVbCzjHmRFD/x2LHzmnVoI7AfylXGgvdvtXu9ZCzJ29wcThb2UzpeMkAvsgxCTY21xK2MuDpxKaC9l7srg56E5V0DKlaaCjEEXRdFE/pvgAlxd+xbEtGS9k64XwDIPgrsQYffSEEMx1oCVxSAwUgfu6GQ/i6Ezmcr3zIdwtyRRbP1ChcCvz+aEG2i1ydD3ZViStQ+D4ugmWmzQOCpzlwB8v6vqKjLM/cdBGWsCjkqC5JFU7tDOBZxctCd8o76m/R8A45cIk70GdsORyheYMOgohuLaA11mMe7LLRV77Oapbqb7YMXn9dw+O2FNSCI9xIA6x5BqMO2+yC3yukHPKTRT1/uRJKWq3Tv8aW1zkwVJo+dCYUFBhSq6YG6ucZgHaX+K/NA10FCIootgO+J4XhQXEGhKnoBROYbvvvhpdYZNky+ywNRKNqM5k2FaKMVPeok0j05umDVdHiwvbTOvvM95hUBmb5JC7CzlEFN6EeIYLeGXzET8KoedbspQyYW6t7u6RvNw5Hm1BcYTK0u14SxJGHi2PE7teDd4TXRkiXi7CHu1bFtRRFlXaClo+2DyhJMFtcYlt4uFNRF02vEpCVkBflvLnqbgTu5OcRuf2ZUDLF1C/oLkmjUPBxc+RsvDe47Si2GOklbBsSZJc4WaIR0jx9okxufAjAvdB2DJUa3fq9gRLLU4lgXfzgWi+/c0id0m8AGIb+WLPa9vNx0okqcFf6XQr3uzfHsuaWPa3ShrdZNWiheELRcVnheQ/oSW83ss/Q3GxCMuaNxNi5n0344qLusoF2ElyPwJK73xfWsQtY3NYi9DJ3msvQu8IHEdgCxDvwuuHff2guDggpgrhNd5rPmkzpsxYbalxSptrW1TJqDYd9aMYLeucoDG5GRS2FmlBc522+YkQ/8mMOJkBV2iya9Ge9Hixd2CjuapiBts7p//qnQnGnPWEtoO4JYQVcni8E51PtLHc4BYu0viJE7A3qc0F+3Hw1Uh4IOfYxxOgKNoNLtiQjtf2vx3/D6yMK9PuodV+AAAAAElFTkSuQmCC" alt="MEGA Group">
+    </div>
+    <div class="mast-tag"><b>CX Professional Diploma</b>Final MCQ Examination</div>
+  </div>
+</header>
+
+<!-- START -->
+<main id="vStart" class="wrap">
+  <section class="paper cover">
+    <p class="kicker">ICXI | MEGA Group</p>
+    <h1>CX Professional Diploma – Final MCQ Examination</h1>
+    <p class="lead">This examination assesses applied judgement across the ICXI 12 CX Pillars Framework. Questions are scenario-based: choose the single best answer for each.</p>
+    <div class="facts">
+      <div><b>48</b><span>questions · 4 per pillar</span></div>
+      <div><b>60 min</b><span>time allowed</span></div>
+      <div><b>70%</b><span>pass mark · 34 of 48</span></div>
+      <div><b>A–D</b><span>one correct answer</span></div>
+      <div><b>No</b><span>negative marking</span></div>
+    </div>
+    <div class="cols">
+      <div>
+        <h2>Examination rules</h2>
+        <ul class="rules">
+          <li>Closed book: no notes, materials or devices.</li>
+          <li>Individual: do not communicate with other candidates.</li>
+          <li>No AI tools (e.g. ChatGPT, Claude) may be used during the examination.</li>
+          <li>Each question is worth 1 mark. Unanswered questions score zero.</li>
+          <li>Don’t dwell on hard questions: flag them, move on and come back.</li>
+          <li>The clock starts when you press <b>Start examination</b>. When time runs out, your answers are submitted automatically.</li>
+          <li>If your connection drops, reopen the same link on the same device to continue. The clock keeps running.</li>
+        </ul>
+      </div>
+      <form id="fStart" novalidate>
+        <h2>Candidate details</h2>
+        <label class="f" for="iName">Full name <small>(as it should appear on your certificate)</small></label>
+        <input type="text" id="iName" autocomplete="name" maxlength="120" required>
+        <label class="f" for="iEmail">Email</label>
+        <input type="email" id="iEmail" autocomplete="email" maxlength="160">
+        <label class="f" for="iOrg">Organisation <small>(optional)</small></label>
+        <input type="text" id="iOrg" autocomplete="organization" maxlength="160">
+        <label class="check"><input type="checkbox" id="iAgree"><span>I confirm that I will complete this examination individually and closed book, without notes, devices or AI tools.</span></label>
+        <button class="btn btn-p full" id="bStart" type="submit" disabled>Start examination</button>
+        <div class="err" id="eStart" role="alert"></div>
+      </form>
+    </div>
+  </section>
+  <p class="foot">ICXI CX Professional Diploma (DiCX) · Delivered with MEGA Group</p>
+</main>
+
+<!-- EXAM -->
+<div id="vExam" class="hidden">
+  <div class="bar">
+    <div class="bar-in">
+      <img src="data:image/png;base64,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" alt="ICXI">
+      <div class="who"><b id="xName"></b>CX Professional Diploma – Final MCQ Examination</div>
+      <div class="prog">Answered <b id="xAns">0</b> / 48</div>
+      <div class="clock" id="clock" aria-live="polite"><div class="l">Time<br>remaining</div><div class="t" id="tLeft">60:00</div></div>
+    </div>
+    <div class="pbar"><i id="pbar"></i></div>
+  </div>
+  <div class="exam">
+    <section class="paper qcard" aria-live="polite">
+      <div class="qhead"><span class="qnum" id="qNum"></span><span class="qpil" id="qPil"></span></div>
+      <p class="qtext" id="qText"></p>
+      <div class="opts" id="qOpts" role="radiogroup"></div>
+      <div class="qnav">
+        <button class="btn btn-s" id="bPrev" type="button">← Previous</button>
+        <button class="btn btn-f" id="bFlag" type="button" aria-pressed="false">⚑ Flag for review</button>
+        <span class="sp"></span>
+        <button class="btn btn-p" id="bNext" type="button">Next →</button>
+      </div>
+    </section>
+    <aside class="paper side">
+      <h3>Answer grid</h3>
+      <div class="legend"><span><i style="background:var(--navy)"></i>Answered</span><span><i style="background:#fff;border:1.5px solid var(--line)"></i>Not answered</span><span><i style="background:var(--amber);border-radius:50%"></i>Flagged</span></div>
+      <div class="grid" id="grid"></div>
+      <div class="sidefoot">
+        <button class="btn btn-n full" id="bFinish" type="button">Finish &amp; submit</button>
+        <p id="saveNote">Your answers are saved as you go.</p>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- RESULT -->
+<main id="vResult" class="wrap hidden">
+  <section class="paper result">
+    <p class="kicker">Provisional result</p>
+    <h1 id="rName" style="font-size:clamp(26px,3.6vw,36px)"></h1>
+    <div class="ring">
+      <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" fill="none" stroke="#E6ECF3" stroke-width="12"/><circle id="rArc" cx="60" cy="60" r="52" fill="none" stroke="#0283DC" stroke-width="12" stroke-linecap="round" stroke-dasharray="326.73" stroke-dashoffset="326.73" style="transition:stroke-dashoffset 1s ease"/></svg>
+      <div class="c"><b id="rScore"></b><span id="rPct"></span></div>
+    </div>
+    <div class="badge" id="rBadge"></div>
+    <p class="rmeta" id="rMsg"></p>
+    <p class="rmeta" style="font-size:14px">Your result has been recorded. Final ratified results are confirmed by ICXI after Examinations Panel review.</p>
+    <div class="bands" id="rBands">
+      <div data-o="Distinction"><b>Distinction</b>43–48 (90%+)</div>
+      <div data-o="Merit"><b>Merit</b>39–42 (80–89%)</div>
+      <div data-o="Pass"><b>Pass</b>34–38 (70–79%)</div>
+      <div data-o="Refer"><b>Refer</b>Below 34</div>
+    </div>
+  </section>
+  <p class="foot">ICXI CX Professional Diploma (DiCX) · Delivered with MEGA Group</p>
+</main>
+
+<div class="loading hidden" id="vLoad">Loading…</div>
+
+<div class="modal hidden" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="paper mbox">
+    <h2 id="mTitle">Submit your examination?</h2>
+    <p id="mBody"></p>
+    <p>Once submitted, you cannot change your answers.</p>
+    <div class="mrow"><button class="btn btn-s" id="mBack" type="button">Back to exam</button><button class="btn btn-p" id="mGo" type="button">Submit now</button></div>
+  </div>
+</div>
+
+<script>
+// ▼▼▼ Paste your Google Apps Script "Web app URL" (ends with /exec) between the quotes ▼▼▼
+const API_URL = 'https://script.google.com/macros/s/AKfycbx_hIINI5xAWlH_cwkxcrxn-eQPGPC2alLa4NSFOeaUQyTLWcytaqPyFBhIcUR2ODDq/exec';
+// ▲▲▲
+</script>
+<script>
+{
+const DATA = {"P": ["Customer Experience Leadership & Governance", "Customer Centricity & Intent", "Customer Insights & Intelligence", "Experience Design & Innovation", "Journey Management & Performance", "Omni-Channel Experience & Delivery", "CX Value, Economics & Impact", "Culture & Employee Experience", "Experience Operations & Excellence", "AI, Automation & Personalisation", "Fairness, Transparency & Digital Trust", "Loyalty, Advocacy & Long-Term Impact"], "Q": [{"n": 1, "p": 1, "q": "An organisation has a Chief Customer Officer who attends the executive committee and signs off CX strategy. However, frontline teams report that CX decisions are frequently reversed during budget reviews. Which statement best describes the governance situation?", "o": ["The organisation has exemplary CX governance — executive sponsorship is in place.", "Governance exists in name but lacks protection mechanisms for CX during commercial pressure.", "The organisation needs to appoint more CX staff to strengthen frontline delivery.", "The problem lies with frontline culture rather than governance structure."]}, {"n": 2, "p": 1, "q": "Which of the following is the strongest evidence that CX is genuinely embedded into organisational strategy rather than treated as a separate initiative?", "o": ["The organisation runs an annual customer satisfaction survey and publishes the results.", "A dedicated CX team exists with its own budget and headcount.", "CX is referenced in corporate strategy documents, and investment decisions include an assessment of CX impact.", "The marketing function includes customer experience messaging in campaigns."]}, {"n": 3, "p": 1, "q": "A CX governance forum meets monthly but consistently fails to produce tracked actions or follow-up accountability. What does this most indicate?", "o": ["The governance forum is meeting too frequently and should be reduced to quarterly.", "The lack of actions suggests that CX performance is satisfactory and no intervention is required.", "The forum needs more senior attendance to be effective.", "CX governance exists structurally but lacks the operational mechanisms to translate oversight into change."]}, {"n": 4, "p": 1, "q": "According to the ICXI framework, what is the primary purpose of CX governance being designed to prevent customer effort rather than react to complaints?", "o": ["To identify systemic sources of friction and eliminate them before they create customer harm.", "To reduce the number of complaints received and improve publicly reported satisfaction scores.", "To demonstrate regulatory compliance with consumer protection requirements.", "To shift accountability for complaints from the CX team to operational management."]}, {"n": 5, "p": 2, "q": "An organisation states that customer centricity is a core value, but most internal policies were last reviewed three years ago and were designed to protect compliance obligations. What does this most suggest?", "o": ["Customer centricity is embedded — the organisation just needs to communicate it better.", "The compliance-first approach is appropriate given the regulatory environment.", "The organisation has good intent but has not operationalised customer centricity into policy design.", "Policy review frequency has no bearing on customer centricity."]}, {"n": 6, "p": 2, "q": "Which behaviour by a senior leader most credibly demonstrates genuine customer-centric intent?", "o": ["Presenting NPS results at the annual company conference.", "Commissioning a new customer satisfaction measurement programme.", "Attending a customer experience event and speaking about the importance of CX.", "Approving a cost reduction that included a customer impact assessment identifying and mitigating key risks."]}, {"n": 7, "p": 2, "q": "A bank's mortgage application process takes 14 days and requires customers to submit the same documentation three times across different departments. This most likely indicates:", "o": ["Internal process design that prioritises departmental workflow over reducing customer effort.", "A complex regulatory environment that cannot be changed.", "An IT system limitation that requires a major replacement programme to resolve.", "A customer communication problem rather than a process design issue."]}, {"n": 8, "p": 2, "q": "What distinguishes meaningful customer co-design from token consultation?", "o": ["Token consultation uses online surveys; meaningful co-design uses focus groups.", "Meaningful co-design demonstrates how customer input directly shaped outcomes and communicates this back to participants.", "Meaningful co-design involves customers approving all decisions before implementation.", "Token consultation is appropriate for small changes; co-design is reserved for major redesigns only."]}, {"n": 9, "p": 3, "q": "An organisation collects post-transaction NPS scores across digital channels and reviews them monthly in a dashboard. However, feedback from telephone and branch channels is not systematically captured. Which statement best describes the insight programme?", "o": ["The insight programme is adequate as NPS is the most reliable measure of loyalty.", "Branch and telephone feedback is less reliable than digital feedback and can be excluded.", "Monthly review frequency is sufficient for strategic decision-making purposes.", "The programme has structural coverage gaps — insight from significant channels is absent, limiting decision quality."]}, {"n": 10, "p": 3, "q": "Customer feedback consistently highlights that customers feel confused by communications during the complaint process. The organisation logs this as a theme in its quarterly report. No changes are made in the following six months. This most represents:", "o": ["A failure to translate insight into action — the feedback loop is incomplete.", "Normal governance cadence — changes of this complexity take time to implement.", "Acceptable performance, as one complaint theme does not justify operational change.", "Evidence that the insight programme is working as intended."]}, {"n": 11, "p": 3, "q": "Which of the following best describes the value of qualitative and narrative customer insight alongside quantitative metrics?", "o": ["Qualitative insight is only valuable for validating quantitative findings that are statistically significant.", "Qualitative insight explains the reasons why experiences succeed or fail, enabling more human-centred and targeted improvement.", "Narrative insight is primarily useful for marketing and brand storytelling rather than operational decisions.", "Qualitative data is too subjective to be used in governance forums."]}, {"n": 12, "p": 3, "q": "An organisation uses predictive analytics to identify customers who are showing early signs of disengagement and initiates proactive outreach before formal complaints are received. This approach most reflects:", "o": ["Reactive CX management — responding to signals after they have been identified.", "An intrusive approach that may damage customer trust by contacting customers before they have raised issues.", "Predictive intelligence being used to prevent harm before it escalates to customer experience failure.", "A marketing-led retention tactic rather than a CX management discipline."]}, {"n": 13, "p": 4, "q": "An organisation's customer onboarding process was designed five years ago around its core banking system's workflow. Customers consistently rate it as confusing and time-consuming. Which describes this situation most accurately?", "o": ["The process reflects design driven by internal system convenience rather than customer need — a failure of intentional experience design.", "The onboarding process is an operational constraint that cannot be changed without IT investment.", "Customer confusion indicates a training problem with staff rather than a design issue.", "The issue is primarily one of customer communication rather than journey design."]}, {"n": 14, "p": 4, "q": "A technology company announces an AI-powered chatbot as a major CX innovation. The chatbot was selected because of the technology's capabilities, not in response to a defined customer problem. According to ICXI principles, what risk does this approach carry?", "o": ["The technology may be too advanced for the customer base.", "Without a defined problem to solve, the innovation may add complexity rather than delivering real customer value.", "AI chatbots are generally not suitable for CX applications.", "The main risk is regulatory — AI tools require compliance approval before deployment."]}, {"n": 15, "p": 4, "q": "Which sequence best represents the ICXI recommended approach to experience design for a major journey improvement?", "o": ["Plan → Build → Launch → Measure", "Identify technology solution → Build business case → Implement → Evaluate complaints", "Define customer problem → Prototype → Test with customers → Measure against success criteria → Scale", "Conduct staff survey → Redesign process → Train teams → Monitor internally"]}, {"n": 16, "p": 4, "q": "An experience design team creates measurable success criteria before implementation, conducts a structured pilot with real customers, and reviews outcomes before full rollout. According to ICXI principles, this approach most demonstrates:", "o": ["Unnecessarily slow delivery that delays customer benefit.", "Gold-plating — more rigour than is necessary for most customer journey improvements.", "A compliance-driven approach required for regulated industries only.", "A disciplined, evidence-based design process that reduces implementation risk and validates effectiveness."]}, {"n": 17, "p": 5, "q": "A customer contacts a utility company's digital portal to report a billing issue, is transferred to an automated phone system, and then to a specialist team — repeating their account details and issue description at each stage. This most indicates:", "o": ["A resource management problem in the contact centre.", "Poorly designed or absent cross-functional handovers within the billing complaint journey.", "A customer education issue — customers should use self-service portals more effectively.", "Normal practice in complex service organisations with multiple specialist teams."]}, {"n": 18, "p": 5, "q": "A retail bank has produced journey maps for its top five customer journeys. These were created in a two-day workshop two years ago and have not been updated since. What is the most significant risk this creates?", "o": ["The maps may have been created without sufficient senior involvement.", "Two years is a standard refresh cycle — the maps are still fit for purpose.", "The maps have likely become inaccurate and will not reflect current operational reality, reducing their value for governance and improvement.", "Journey maps cannot be used for governance purposes and are only useful for training."]}, {"n": 19, "p": 5, "q": "According to ICXI principles, why should customer effort be treated as a critical risk indicator rather than simply a service quality metric?", "o": ["Effort scores correlate with NPS and can be used to predict score improvements.", "Customer effort measures are more reliable than satisfaction scores in highly regulated industries.", "Effort is primarily an operational metric and relevant only to contact centre management.", "Rising customer effort predicts complaints, churn and operational rework before they fully materialise, enabling earlier preventative intervention."]}, {"n": 20, "p": 5, "q": "Which of the following best demonstrates mature journey management during a major organisational restructuring?", "o": ["Reaffirming journey ownership in the new structure, completing customer impact assessments and monitoring journey performance throughout the transition.", "Pausing all journey improvement activities until the restructure is complete.", "Communicating the restructure to customers to manage their expectations during a period of change.", "Transferring all journey-related responsibilities to the project management office for the duration of the change programme."]}, {"n": 21, "p": 6, "q": "A telecommunications company's website allows customers to upgrade their contract, but the contact centre agent cannot see what options were viewed online and has to restart the customer's assessment from scratch. This most represents:", "o": ["A training issue — agents need better product knowledge to handle upgrade queries.", "Expected complexity given the range of products available.", "A channel silo problem — the absence of shared information across channels creates repetition and friction.", "An acceptable trade-off to protect customer data privacy."]}, {"n": 22, "p": 6, "q": "A travel company deploys a chatbot that successfully handles 60% of routine queries. For the remaining 40%, customers must navigate a four-step verification process before reaching a human agent, during which 22% abandon the interaction. According to ICXI principles, what does this most indicate?", "o": ["The chatbot is performing adequately — a 60% resolution rate is above industry average.", "The 22% abandonment rate reflects customers who did not actually need help.", "The verification process is necessary for fraud prevention and cannot be simplified.", "The escalation pathway is poorly designed and creating unnecessary friction and customer abandonment."]}, {"n": 23, "p": 6, "q": "Which approach to automation deployment best reflects the ICXI principle that automation should support customers rather than deflect them?", "o": ["Deploy automation for scenarios where it genuinely resolves customer needs, with clear human escalation routes and empathetic handling for high-emotion cases.", "Automate all routine queries to reduce contact centre headcount and cost-to-serve.", "Introduce automation in phases, starting with the highest-volume query types regardless of complexity.", "Measure automation success by the percentage of queries handled without human agent involvement."]}, {"n": 24, "p": 6, "q": "An insurance company serves a customer base that includes elderly policyholders, customers with disabilities, and customers with low digital confidence. Their recent channel strategy moved all routine service interactions to a digital-only model. What is the primary ICXI concern with this approach?", "o": ["The digital model will reduce customer satisfaction scores across all segments.", "The channel strategy fails the accessibility and inclusivity requirement — it creates unequal effort burdens for vulnerable and digitally excluded customers.", "Digital-only models require regulatory approval in the insurance sector.", "Digital self-service channels are generally less secure than telephony channels."]}, {"n": 25, "p": 7, "q": "A CX Director wants to secure investment for a journey redesign programme. The current investment case references customer satisfaction scores and qualitative feedback. The Finance Director requests a business case. What should the CX Director include to make the strongest case?", "o": ["A detailed plan of the design methodology and the project timeline.", "NPS data showing the gap between the current score and the target score.", "Competitor benchmarking showing that peers are investing in similar programmes.", "Financial modelling including cost-to-serve reduction, estimated churn prevention, failure demand reduction and ROI over a defined period."]}, {"n": 26, "p": 7, "q": "Failure demand is best defined as:", "o": ["Contact volume created by failures in the customer experience — repeat contacts, escalations and rework generated by unresolved issues.", "Customer demand that cannot be fulfilled due to capacity constraints.", "Demand from customers who are considered at risk of churn.", "The volume of contacts received outside contracted service hours."]}, {"n": 27, "p": 7, "q": "A retailer calculates that customers who rate their experience highly have a lifetime value 2.3 times greater than those who rate it poorly, and a churn rate 40% lower. How should this data be used, according to ICXI principles?", "o": ["The data should be published to demonstrate the organisation's CX credentials externally.", "The data should be used in financial modelling to prioritise CX investment and defend it during budget reviews.", "The data validates the existing CX programme — no further action is required.", "The data should be shared with the marketing team to improve customer communications."]}, {"n": 28, "p": 7, "q": "Which of the following situations most clearly demonstrates the commercial cost of poor experience being invisible to leadership?", "o": ["CX performance is reported monthly but satisfaction scores are stable.", "The CX team does not have access to financial data and works with operational metrics only.", "Repeat contact rates, compensation costs and failure demand are not tracked or reported, meaning leadership cannot quantify the financial cost of experience failure.", "Customer effort scores are tracked but not linked to retention data."]}, {"n": 29, "p": 8, "q": "A contact centre implements a performance management system that rewards agents with the fastest average handling time and penalises those who exceed target durations. Customer satisfaction scores begin to decline. What most likely explains this?", "o": ["The incentive system is driving behaviours that optimise for internal efficiency at the expense of customer experience quality.", "Customers are becoming more demanding and less satisfied with standard service levels.", "Average handling time is an unreliable proxy for customer satisfaction.", "The agents need additional product training to resolve queries more quickly."]}, {"n": 30, "p": 8, "q": "A frontline manager consistently reinforces 'computer says no' responses rather than applying contextual judgement, even in cases where customer distress is visible. According to ICXI principles, the most likely root cause is:", "o": ["The manager lacks empathy and should be replaced.", "Internal policies are not designed to enable customer support, and empowerment boundaries have not been defined or supported by management.", "The IT system needs to be upgraded to allow more flexible exception handling.", "The manager has not been trained on the organisation's values statement."]}, {"n": 31, "p": 8, "q": "Which of the following best demonstrates psychological safety in a CX context?", "o": ["An open-door policy that allows staff to raise issues directly with senior management.", "A whistleblowing procedure that allows anonymous external reporting to regulators.", "An environment where employees can report customer-impacting problems without fear of blame or consequence, and where early warnings are acted upon before they cause harm.", "A culture where staff are encouraged to use their initiative without following standard procedures."]}, {"n": 32, "p": 8, "q": "According to ICXI principles, which approach to hiring most effectively supports a strong CX culture?", "o": ["Prioritising candidates with the most relevant technical skills and product knowledge.", "Reserving CX-specific recruitment criteria for senior and customer-facing roles only.", "Hiring from competitors who deliver stronger customer experience in the same sector.", "Including CX capability requirements — communication, empathy, judgement and ownership — in recruitment criteria, with these assessed throughout the selection process."]}, {"n": 33, "p": 9, "q": "A contact centre consistently meets its SLA of answering 85% of calls within 20 seconds. However, first-contact resolution rates are 54%, meaning 46% of customers need to call back. What does this situation most indicate?", "o": ["The SLA target is appropriate — speed of answer is the primary driver of customer satisfaction.", "The SLA measures operational speed rather than customer outcome, and is being met while a significant experience failure goes unaddressed.", "The first-contact resolution rate reflects customer complexity rather than operational quality.", "The organisation needs additional resource to handle the volume of repeat contacts."]}, {"n": 34, "p": 9, "q": "A complaints team identifies that 38% of all complaints received in a quarter are linked to a confusing clause in the organisation's standard letter of agreement. The team resolves each complaint individually. According to ICXI principles, what should happen next?", "o": ["The complaints team should be expanded to manage the volume more efficiently.", "The issue should be escalated to the legal team for assessment before any changes are made.", "A root-cause fix should be applied to the letter of agreement itself — preventing the same complaint from recurring rather than repeatedly managing its symptoms.", "The response template should be improved so that agents can resolve the complaint more quickly."]}, {"n": 35, "p": 9, "q": "An organisation's quality assurance programme scores interactions against 15 compliance and procedural criteria but includes no assessment of empathy, clarity or customer effort. What is the primary risk of this approach?", "o": ["The QA process will be too complex for frontline managers to implement consistently.", "QA scoring is too subjective to include criteria such as empathy.", "The compliance criteria may conflict with customer-centric behaviour in some scenarios.", "Staff can achieve high quality scores while delivering interactions that leave customers confused, frustrated or feeling unfairly treated."]}, {"n": 36, "p": 9, "q": "During a peak holiday period, an e-commerce company's customer service team is overwhelmed and response times rise from 4 hours to 72 hours with no customer communication. What does this most reflect?", "o": ["Inadequate operational resilience planning — the absence of contingency plans and proactive customer communication during disruption damages trust.", "Acceptable variance given peak demand — customers understand seasonal pressure.", "A resourcing failure that can be resolved by increasing headcount.", "A technology limitation that prevents automated responses during high-volume periods."]}, {"n": 37, "p": 10, "q": "An energy company introduces an AI chatbot and measures its success by the percentage of customer queries handled without human agent involvement (deflection rate). According to ICXI principles, what is the key problem with this measure?", "o": ["Deflection rate is a commercial metric and should be owned by the finance team, not CX.", "The measure is appropriate but should be reported alongside first-contact resolution.", "Deflection rate measures whether customers reached a human, not whether their issue was resolved — it can mask poor customer outcomes.", "AI chatbots cannot reliably handle more than 30% of queries without significant errors."]}, {"n": 38, "p": 10, "q": "A financial services provider's AI lending decision system is found to produce approval rates 15% lower for applicants from certain postcodes, compared to similar credit profiles elsewhere. What is the most appropriate governance response?", "o": ["The disparity likely reflects legitimate risk differences and requires no action.", "The finding should be assessed by the legal team to determine regulatory exposure before any operational action is taken.", "The organisation should communicate transparently with affected applicants and review declined cases upon request.", "The AI system should be immediately suspended for bias audit, remediation and governance review before redeployment."]}, {"n": 39, "p": 10, "q": "A customer is in a conversation with a financial services chatbot about a possible account closure. The customer has disclosed that they are experiencing financial hardship. According to ICXI principles, the chatbot should:", "o": ["Immediately route to a trained human agent with the context transferred, as this is a high-emotion and potentially vulnerable customer scenario.", "Continue handling the closure request through the automated flow to reduce customer effort.", "Offer the customer FAQs about account closure and direct them to the website for more information.", "Pause the automated flow and ask the customer to call back during business hours."]}, {"n": 40, "p": 10, "q": "Which of the following most accurately describes personalisation that 'earns trust' according to ICXI principles?", "o": ["Personalisation that uses the maximum available data to predict and pre-empt every customer need.", "Personalisation that improves relevance and reduces effort, is transparent about why content is shown, and respects customer consent and preferences.", "Personalisation that uses loyalty programme data to offer targeted discounts based on spending patterns.", "Personalisation that is hidden from customers to avoid perceptions of surveillance."]}, {"n": 41, "p": 11, "q": "A subscription service buries its auto-renewal terms on page 7 of a 12-page terms and conditions document. When customers try to cancel, they encounter a four-step process that requires telephone contact during restricted business hours. According to ICXI principles, this most represents:", "o": ["Standard industry practice for subscription services with complex billing arrangements.", "Acceptable practice as customers agreed to the terms upon sign-up.", "A legal compliance issue rather than a CX design problem.", "A dark pattern and transparency failure — customers are not genuinely informed before commitment, and the cancellation process creates deliberately obstructive friction."]}, {"n": 42, "p": 11, "q": "Which of the following most accurately reflects the ICXI position on digital trust as an organisational risk factor?", "o": ["Trust erosion is visible in complaint patterns, churn intent and avoidance behaviour before it affects revenue — it must be measured, monitored and escalated when deteriorating.", "Digital trust is a brand and marketing responsibility that CX teams should influence indirectly.", "Digital trust is primarily a cybersecurity and data protection concern rather than a CX matter.", "Trust can only be meaningfully assessed through periodic customer survey research."]}, {"n": 43, "p": 11, "q": "A customer's insurance claim is declined by an automated underwriting system. The customer receives a standard letter stating the claim has been declined but providing no reason, no next steps and no appeal route. What ICXI principle has been most clearly violated?", "o": ["The organisation has breached its service level agreement on response times.", "The customer has not received a clear explanation of the decision, actionable next steps or a route to challenge the outcome — a fundamental fairness and transparency failure.", "The automated decision is invalid — insurance decisions must always involve human review.", "The letter template does not comply with plain language communication guidelines."]}, {"n": 44, "p": 11, "q": "An organisation conducts outcome audits across different customer groups and identifies that elderly customers receive significantly less favourable resolutions in complaint handling compared to younger customers with equivalent cases. What is the most appropriate immediate action?", "o": ["Initiate additional training for complaint handlers on treating all customers consistently.", "Increase management oversight of complaint handlers serving elderly customers.", "Conduct root-cause analysis to determine the source of bias, implement corrective actions, monitor outcomes and formally document the remediation process.", "Communicate to elderly customers that their cases will receive additional review."]}, {"n": 45, "p": 12, "q": "An organisation's customer satisfaction score has been stable at 7.8 out of 10 for 18 months. The retention team reports that churn has increased by 12% in the same period. How should this apparent contradiction be interpreted?", "o": ["Satisfaction scores measure retrospective perception and may not capture future intent or early disengagement signals — the churn data likely reflects silent attrition not visible in satisfaction measures.", "The churn data is unreliable — satisfaction and retention should move in the same direction.", "The increase in churn is likely due to competitive pricing rather than experience quality.", "The organisation should increase its target satisfaction score to improve retention."]}, {"n": 46, "p": 12, "q": "A telecommunications company rewards customers who refer others with bill credits. The number of referrals increases by 35% after the programme launches. According to ICXI principles, what key limitation does this approach have?", "o": ["Referral programmes are only effective in low-involvement product categories.", "Incentivised referrals may produce volume without authentic advocacy — they do not reveal the genuine motivations behind customer recommendation or build durable brand trust.", "The 35% uplift is below the industry benchmark for well-designed referral programmes.", "Bill credits are less effective than product rewards for driving referral behaviour."]}, {"n": 47, "p": 12, "q": "Following a major IT outage, a bank's service recovery team prioritises speed of closure — targeting resolution of all cases within 24 hours. Customer feedback following the recovery shows many customers felt their complaints were not genuinely heard and their distress was dismissed. According to ICXI principles, what most went wrong?", "o": ["The 24-hour target was too aggressive — more time was needed for thorough case assessment.", "The recovery team lacked the authority to offer appropriate remediation to affected customers.", "Recovery was optimised for process efficiency rather than trust restoration — dignity, genuine accountability and emotional acknowledgement were not prioritised.", "Customer expectations following an IT outage are unrealistically high and cannot be fully addressed."]}, {"n": 48, "p": 12, "q": "A mobile phone operator identifies through analysis of app usage data that a segment of customers has significantly reduced their use of premium features in the past 60 days, without contacting the company. According to ICXI principles, what action best reflects loyalty management excellence?", "o": ["Wait for the customers to make contact or for their contracts to come up for renewal.", "Segment the group for a targeted marketing campaign promoting the underused features.", "Offer the segment a promotional discount on their next bill to incentivise re-engagement.", "Treat this as an early disengagement signal, trigger proactive outreach to understand any underlying experience issues, and address root causes before the customers formally disengage."]}]};
+const P = DATA.P, Q = DATA.Q, N = Q.length;
+const $ = id => document.getElementById(id);
+const KEY_ID = 'icxi_dicx_session';
+const store = {get(){try{return localStorage.getItem(KEY_ID)}catch(e){return null}},set(v){try{localStorage.setItem(KEY_ID,v)}catch(e){}},del(){try{localStorage.removeItem(KEY_ID)}catch(e){}}};
+const FLAGS = 'icxi_dicx_flags_';
+
+let S = null;               // session {id, deadline, offset, name}
+let ans = new Array(N).fill(null), flags = new Array(N).fill(false), cur = 0;
+let leaves = 0, dirty = false, saving = false, submitting = false, tick = null;
+
+const run = (fn, ...args) => new Promise((res, rej) => {
+  if (window.google && google.script && google.script.run) {
+    google.script.run.withSuccessHandler(res).withFailureHandler(rej)[fn](...args);
+    return;
+  }
+  if (!/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(API_URL)) return rej(new Error('Exam is not connected yet: API_URL is missing.'));
+  fetch(API_URL, {method: 'POST', headers: {'Content-Type': 'text/plain;charset=utf-8'}, body: JSON.stringify({fn, args}), redirect: 'follow'})
+    .then(r => r.json())
+    .then(j => j.ok ? res(j.result) : rej(new Error(j.error || 'Server error.')))
+    .catch(() => rej(new Error('Connection problem. Please check your internet and try again.')));
+});
+const show = v => ['vStart','vExam','vResult','vLoad'].forEach(x => $(x).classList.toggle('hidden', x !== v));
+
+/* ---- start ---- */
+const chk = () => { $('bStart').disabled = !($('iAgree').checked && $('iName').value.trim().length >= 3); };
+['iName','iAgree'].forEach(id => $(id).addEventListener('input', chk));
+$('iAgree').addEventListener('change', chk);
+$('fStart').addEventListener('submit', async e => {
+  e.preventDefault();
+  $('eStart').textContent = '';
+  const name = $('iName').value.trim(), email = $('iEmail').value.trim();
+  if (name.length < 3) { $('eStart').textContent = 'Please enter your full name.'; return; }
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { $('eStart').textContent = 'Please enter a valid email address.'; return; }
+  $('bStart').disabled = true; $('bStart').textContent = 'Starting…';
+  try {
+    const r = await run('startExam', {name, email, org: $('iOrg').value.trim()});
+    begin(r);
+  } catch (err) {
+    $('eStart').textContent = (err && err.message) || 'Could not start. Please try again.';
+    $('bStart').textContent = 'Start examination'; chk();
+  }
+});
+
+function begin(r) {
+  S = {id: r.id, deadline: r.deadline, offset: r.now - Date.now(), name: r.name};
+  store.set(r.id);
+  (r.answers || []).forEach((v, i) => { if (v !== null && v !== undefined) ans[i] = v; });
+  leaves = r.leaves || 0;
+  try { const f = JSON.parse(localStorage.getItem(FLAGS + r.id) || '[]'); f.forEach((v, i) => flags[i] = !!v); } catch (e) {}
+  $('xName').textContent = r.name;
+  buildGrid(); render(); show('vExam'); window.scrollTo(0, 0);
+  updateClock(); tick = setInterval(updateClock, 1000);
+  setInterval(() => { if (dirty) save(); }, 15000);
+}
+
+/* ---- exam ---- */
+function buildGrid() {
+  let h = '';
+  for (let p = 0; p < 12; p++) {
+    h += '<div class="prow" title="Pillar ' + (p + 1) + ': ' + esc(P[p]) + '"><span>P' + (p + 1) + '</span>';
+    for (let k = 0; k < 4; k++) { const i = p * 4 + k; h += '<button type="button" class="cell" data-i="' + i + '" aria-label="Question ' + (i + 1) + '">' + (i + 1) + '</button>'; }
+    h += '</div>';
+  }
+  $('grid').innerHTML = h;
+  $('grid').addEventListener('click', e => { const b = e.target.closest('.cell'); if (b) { cur = +b.dataset.i; render(); top(); } });
+}
+function esc(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function render() {
+  const q = Q[cur];
+  $('qNum').textContent = 'Question ' + q.n + ' of ' + N;
+  $('qPil').textContent = 'Pillar ' + q.p + ': ' + P[q.p - 1];
+  $('qText').textContent = q.q;
+  $('qOpts').innerHTML = q.o.map((o, k) =>
+    '<label class="opt' + (ans[cur] === k ? ' sel' : '') + '"><input type="radio" name="opt" value="' + k + '"' + (ans[cur] === k ? ' checked' : '') + '><span class="L">' + 'ABCD'[k] + '</span><span class="T">' + esc(o) + '</span></label>').join('');
+  $('bPrev').disabled = cur === 0; $('bPrev').style.visibility = cur === 0 ? 'hidden' : 'visible';
+  $('bNext').textContent = cur === N - 1 ? 'Review & submit' : 'Next →';
+  $('bFlag').classList.toggle('on', flags[cur]); $('bFlag').setAttribute('aria-pressed', flags[cur]);
+  $('bFlag').textContent = flags[cur] ? '⚑ Flagged' : '⚑ Flag for review';
+  document.querySelectorAll('.cell').forEach(c => { const i = +c.dataset.i; c.classList.toggle('a', ans[i] !== null); c.classList.toggle('f', flags[i]); c.classList.toggle('cur', i === cur); });
+  const done = ans.filter(v => v !== null).length;
+  $('xAns').textContent = done; $('pbar').style.width = (done / N * 100) + '%';
+}
+$('qOpts').addEventListener('change', e => {
+  if (e.target.name !== 'opt') return;
+  ans[cur] = +e.target.value; dirty = true; render();
+  clearTimeout(window._sv); window._sv = setTimeout(save, 2500);
+});
+$('bPrev').addEventListener('click', () => { if (cur > 0) { cur--; render(); top(); } });
+$('bNext').addEventListener('click', () => { if (cur < N - 1) { cur++; render(); top(); } else confirmSubmit(); });
+$('bFlag').addEventListener('click', () => { flags[cur] = !flags[cur]; try { localStorage.setItem(FLAGS + S.id, JSON.stringify(flags)); } catch (e) {} render(); });
+$('bFinish').addEventListener('click', confirmSubmit);
+function top() { if (window.innerWidth < 900) window.scrollTo({top: 0}); }
+document.addEventListener('keydown', e => {
+  if ($('vExam').classList.contains('hidden') || !$('modal').classList.contains('hidden')) return;
+  if (e.target.tagName === 'INPUT' && e.target.type !== 'radio') return;
+  if (e.key === 'ArrowRight' && cur < N - 1) { cur++; render(); }
+  else if (e.key === 'ArrowLeft' && cur > 0) { cur--; render(); }
+});
+document.addEventListener('visibilitychange', () => { if (document.hidden && S && !submitting) { leaves++; dirty = true; } });
+
+async function save() {
+  if (!S || saving || submitting || !dirty) return;
+  saving = true; dirty = false;
+  try { await run('saveProgress', S.id, ans, leaves); $('saveNote').textContent = 'All answers saved.'; }
+  catch (e) { dirty = true; $('saveNote').textContent = 'Saving… check your connection.'; }
+  saving = false;
+}
+
+/* ---- clock ---- */
+function updateClock() {
+  const left = Math.max(0, Math.round((S.deadline - (Date.now() + S.offset)) / 1000));
+  const m = Math.floor(left / 60), s = left % 60;
+  $('tLeft').textContent = m + ':' + String(s).padStart(2, '0');
+  $('clock').classList.toggle('warn', left <= 600 && left > 300);
+  $('clock').classList.toggle('crit', left <= 300);
+  if (left === 0) { clearInterval(tick); submit(true); }
+}
+
+/* ---- submit ---- */
+function confirmSubmit() {
+  const un = ans.filter(v => v === null).length, fl = flags.filter(Boolean).length;
+  $('mBody').textContent = 'You have answered ' + (N - un) + ' of ' + N + ' questions.' +
+    (un ? ' ' + un + ' unanswered question' + (un > 1 ? 's' : '') + ' will score zero.' : '') +
+    (fl ? ' ' + fl + ' question' + (fl > 1 ? 's are' : ' is') + ' still flagged for review.' : '');
+  $('modal').classList.remove('hidden'); $('mBack').focus();
+}
+$('mBack').addEventListener('click', () => $('modal').classList.add('hidden'));
+$('mGo').addEventListener('click', () => submit(false));
+
+async function submit(auto) {
+  if (submitting) return;
+  submitting = true; clearInterval(tick);
+  $('modal').classList.add('hidden');
+  show('vLoad'); $('vLoad').textContent = auto ? 'Time is up. Submitting your answers…' : 'Submitting your answers…';
+  for (let a = 0; a < 4; a++) {
+    try { const r = await run('submitExam', S.id, ans, leaves, auto); showResult(r); return; }
+    catch (e) { await new Promise(r => setTimeout(r, 2500)); }
+  }
+  $('vLoad').textContent = 'We could not reach the server. Please check your connection and reload this page; your saved answers will be submitted.';
+}
+
+function showResult(r) {
+  store.del();
+  try { localStorage.removeItem(FLAGS + (S ? S.id : '')); } catch (e) {}
+  $('rName').textContent = r.name;
+  $('rScore').textContent = r.score + ' / ' + r.total;
+  $('rPct').textContent = r.pct.toFixed(1) + '%';
+  const ok = r.outcome !== 'Refer';
+  $('rBadge').textContent = r.outcome; $('rBadge').className = 'badge ' + (ok ? 'b-ok' : 'b-no');
+  $('rArc').setAttribute('stroke', ok ? '#0283DC' : '#C62828');
+  $('rMsg').textContent = ok
+    ? 'Congratulations. You have met the pass mark of 70% (34 / 48) for the ICXI CX Professional Diploma.'
+    : 'Your score is below the pass mark of 70% (34 / 48). You are eligible to resit; your tutor will advise on the next steps.';
+  document.querySelectorAll('#rBands div').forEach(d => d.classList.toggle('me', d.dataset.o === r.outcome));
+  show('vResult'); window.scrollTo(0, 0);
+  requestAnimationFrame(() => requestAnimationFrame(() => $('rArc').setAttribute('stroke-dashoffset', 326.73 * (1 - r.score / r.total))));
+}
+
+/* ---- resume on load ---- */
+(async () => {
+  const id = store.get();
+  if (!id) return;
+  show('vLoad');
+  try {
+    const r = await run('resumeExam', id);
+    if (!r) { store.del(); show('vStart'); }
+    else if (r.done) showResult(r.result);
+    else begin(r);
+  } catch (e) { show('vStart'); }
+})();
+}
+</script>
+</body>
+</html>
